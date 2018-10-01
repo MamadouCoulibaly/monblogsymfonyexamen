@@ -1,0 +1,7 @@
+main:
+    resource: "@MainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+_logout:
+    path: secure/logout

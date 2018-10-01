@@ -1,0 +1,105 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+    div.post {
+        background-color: white;
+        box-shadow: 1px 1px 5px #b5b5b5;
+        padding-left: 0px;
+        padding-right: 0px;        
+    }
+
+    div.post-description {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    div.post-container{
+        margin-bottom:15px;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+        <!-- Blog Post Feed -->
+        <div class="col-md-8">
+            {% if posts|length > 0 %}
+                {% for post in posts %}
+                <div class="row post-container">
+                    <div class="col-md-12 post">
+                        <a href="{{path('main_default_post', {'postCode' : post.code})}}">
+                            <img src="{{post.image}}" style="width:100%">
+                        </a> 
+
+                        <div class="post-description">
+                            <a href="{{path('main_default_post', {'postCode' : post.code})}}">
+                                <h3>{{post.title}}</h3>
+                            </a>
+                            <span>
+                                by 
+                                <span>
+                                    {{post.author}}
+                                </span>
+                            </span>
+                            <span>
+                                on 
+                                <span>{{ post.createdAt|date("F jS \\a\\t g:ia") }}</span>
+                            </span>
+                            <span>with 
+                                <a href="{{path('main_default_post', {'postCode' : post.code})}}">0 comments</a>
+                            </span>
+                            <p>{{post.subtitle}}</p>
+                        </div>
+                    </div><!-- Text size -->
+                </div>
+                {% endfor %}
+            {% else %}
+                <h3>No results found</h3>
+            {% endif %}
+        </div>
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Blog Search Well -->
+            <div class="well">
+                <h4>Blog Search</h4>
+                {{ render(  controller('MainBundle:Default:search')) }}
+            </div>
+
+            <!-- Blog Categories Well -->
+            <div class="well">
+                <h4>Blog Categories</h4>
+                <div class="row">
+                    {{ render(controller('MainBundle:Default:categories')) }}
+                </div>
+                <!-- /.row -->
+            </div>
+
+            <!-- Side Widget Well -->
+            <div class="well">
+                <h4>Symfony3 Blog</h4>
+                <p>Minimal blog application with basic features. This page is the blog news feed.</p>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Your Website 2017</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
+
+{% endblock %}
